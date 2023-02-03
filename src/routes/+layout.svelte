@@ -2,8 +2,11 @@
 	import '../app.css';
 </script>
 
-<nav>
-	<ul>
+<nav class="mb-3 border-b py-3">
+	<ul class="mx-auto flex max-w-md gap-3">
+		<li>
+			<a href="/">Home</a>
+		</li>
 		<li>
 			<a href="/auth/login">Login</a>
 		</li>
@@ -13,6 +16,6 @@
 	</ul>
 </nav>
 
-<main>
+<main class="mx-auto max-w-md">
 	<slot />
 </main>

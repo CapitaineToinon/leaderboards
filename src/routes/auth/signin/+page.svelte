@@ -15,7 +15,8 @@
 	<h1>{form.error}</h1>
 {/if}
 
-<form method="post" use:enhance>
+<form method="post" class="flex flex-col gap-3" use:enhance>
+	<h1 class="text-lg font-bold">Sign in</h1>
 	<input type="email" name={names.email} bind:value={$values.email} required />
 	{#if $fieldErrors?.email}
 		<p>{$fieldErrors.email}</p>
@@ -24,5 +25,7 @@
 	{#if $fieldErrors?.name}
 		<p>{$fieldErrors.name}</p>
 	{/if}
-	<button type="submit" disabled={!$success && $submitted}>submit</button>
+	<button type="submit" class="border py-2 disabled:opacity-50" disabled={!$success && $submitted}
+		>submit</button
+	>
 </form>
