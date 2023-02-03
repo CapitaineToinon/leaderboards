@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../app.css';
+	import '../app.css'
 </script>
 
 <nav class="mb-3 border-b py-3">
