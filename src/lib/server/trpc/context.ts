@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client'
 import type { inferAsyncReturnType } from '@trpc/server'
+import { prisma } from '$lib/server/prisma'
 
 export const createContext = async () => {
-	const db = new PrismaClient()
-
 	return {
-		db
+		db: prisma
 	}
 }
 
