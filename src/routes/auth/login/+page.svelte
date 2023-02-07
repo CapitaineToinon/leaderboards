@@ -15,10 +15,6 @@
 	<h1>{form.error}</h1>
 {/if}
 
-{#if form?.data}
-	<h1>Welcome back, {form.data.email}!</h1>
-{/if}
-
 <form
 	method="post"
 	use:enhance
