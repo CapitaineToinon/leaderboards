@@ -33,7 +33,7 @@ export const actions = {
 				token
 			})
 
-			throw redirect(307, '/')
+			throw redirect(302, '/')
 		} catch (e) {
 			if (e instanceof TRPCError) {
 				if (e.code === 'FORBIDDEN') {

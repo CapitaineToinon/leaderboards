@@ -14,6 +14,6 @@ export const actions = {
 			cookies
 		})
 
-		throw redirect(307, '/auth/login')
+		throw redirect(302, '/auth/login')
 	}
 } satisfies Actions
