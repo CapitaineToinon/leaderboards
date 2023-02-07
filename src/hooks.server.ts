@@ -2,9 +2,10 @@ import { defineAbilityFor } from '$lib/server/casl'
 import { verify } from '$lib/server/jose'
 import type { Handle, Cookies } from '@sveltejs/kit'
 import { errors } from 'jose'
+import { getCookie, deleteCookie } from '$lib/server/cookies/auth'
 
 async function getUserFromEvent({ cookies }: { cookies: Cookies }) {
-	const token = cookies.get('auth_token')
+	const token = getCookie({ cookies })
 
 	if (!token) {
 		return null
@@ -15,7 +16,7 @@ async function getUserFromEvent({ cookies }: { cookies: Cookies }) {
 		return user
 	} catch (e) {
 		if (e instanceof errors.JWTExpired) {
-			cookies.delete('auth_token')
+			deleteCookie({ cookies })
 			return null
 		}
 

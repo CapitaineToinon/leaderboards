@@ -5,6 +5,7 @@ import { createCaller } from '$lib/server/trpc'
 import { TRPCError } from '@trpc/server'
 import { redirect } from '@sveltejs/kit'
 import { sign } from '$lib/server/jose'
+import * as authCookie from '$lib/server/cookies/auth'
 
 export const load = (async ({ locals }) => {
 	if (locals.user) {
@@ -27,11 +28,9 @@ export const actions = {
 			const user = await trpc.auth.login(form.result)
 			const token = await sign(user)
 
-			cookies.set('auth_token', token, {
-				path: '/',
-				httpOnly: true,
-				sameSite: 'strict',
-				secure: import.meta.env.PROD
+			authCookie.setCookie({
+				cookies,
+				token
 			})
 
 			throw redirect(307, '/')

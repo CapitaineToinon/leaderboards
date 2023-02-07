@@ -1,5 +1,6 @@
 import type { Actions, PageServerLoad } from './$types'
 import { redirect } from '@sveltejs/kit'
+import * as authCookie from '$lib/server/cookies/auth'
 
 export const load = (async ({ locals }) => {
 	return {
@@ -9,11 +10,8 @@ export const load = (async ({ locals }) => {
 
 export const actions = {
 	default: async ({ cookies }) => {
-		cookies.delete('auth_token', {
-			path: '/',
-			httpOnly: true,
-			sameSite: 'strict',
-			secure: import.meta.env.PROD
+		authCookie.deleteCookie({
+			cookies
 		})
 
 		throw redirect(307, '/auth/login')

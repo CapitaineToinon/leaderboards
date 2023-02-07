@@ -56,7 +56,6 @@ export const postRouter = router({
 				data: input
 			})
 		}),
-
 	delete: procedure
 		.use(auth)
 		.input(get)
