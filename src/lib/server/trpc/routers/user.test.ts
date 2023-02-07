@@ -1,12 +1,12 @@
 import { describe, it, expect, vi } from 'vitest'
 import { prisma } from '$lib/server/__mocks__/prisma'
-import { createCaller } from '..'
+import { createCaller } from '$lib/server/trpc'
 import { Prisma } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 
 vi.mock('$lib/server/prisma')
 
-describe('trpc auth tests', () => {
+describe('trpc user router', () => {
 	it('should be able to create a user', async () => {
 		const newUser = { id: 1, email: 'user@prisma.io', name: 'Prisma Fan' }
 		prisma.user.create.mockResolvedValue(newUser)
@@ -33,10 +33,7 @@ describe('trpc auth tests', () => {
 
 		const trpc = await createCaller()
 
-		await expect(trpc.user.create(newUser)).rejects.toThrow(
-			new TRPCError({
-				code: 'CONFLICT'
-			})
-		)
+		await expect(trpc.user.create(newUser)).rejects.toThrow(TRPCError)
+		await expect(trpc.user.create(newUser)).rejects.toThrow('CONFLICT')
 	})
 })
