@@ -3,16 +3,16 @@ import type { PrismaQuery, Subjects } from '@casl/prisma'
 import { PureAbility, AbilityBuilder } from '@casl/ability'
 import { createPrismaAbility } from './prisma'
 
+type Actions = 'read' | 'create' | 'update' | 'delete'
+
+type PrismaSubjects = {
+	User: User
+	Post: Post
+}
+
+export type AppAbility = PureAbility<[Actions, Subjects<PrismaSubjects>], PrismaQuery>
+
 export function defineAbilityFor(user: User | null) {
-	type Actions = 'read' | 'create' | 'update' | 'delete'
-
-	type PrismaSubjects = {
-		User: User
-		Post: Post
-	}
-
-	type AppAbility = PureAbility<[Actions, Subjects<PrismaSubjects>], PrismaQuery>
-
 	const builder = new AbilityBuilder<AppAbility>(createPrismaAbility)
 	const { can, build } = builder
 

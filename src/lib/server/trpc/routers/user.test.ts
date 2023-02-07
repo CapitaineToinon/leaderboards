@@ -1,10 +1,20 @@
 import { describe, it, expect, vi } from 'vitest'
 import { prisma } from '$lib/server/__mocks__/prisma'
-import { createCaller } from '$lib/server/trpc'
+import { createCaller as _createCaller } from '$lib/server/trpc'
 import { Prisma } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
+import { defineAbilityFor } from '$lib/server/casl'
 
 vi.mock('$lib/server/prisma')
+
+async function createCaller() {
+	return await _createCaller({
+		locals: {
+			user: null,
+			abilities: defineAbilityFor(null)
+		}
+	})
+}
 
 describe('trpc user router', () => {
 	it('should be able to create a user', async () => {

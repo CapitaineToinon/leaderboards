@@ -1,8 +1,9 @@
+import { defineAbilityFor } from '$lib/server/casl'
 import { verify } from '$lib/server/jose'
 import type { Handle, Cookies } from '@sveltejs/kit'
 import { errors } from 'jose'
 
-async function getUserFromCookies(cookies: Cookies) {
+async function getUserFromEvent({ cookies }: { cookies: Cookies }) {
 	const token = cookies.get('auth_token')
 
 	if (!token) {
@@ -23,14 +24,8 @@ async function getUserFromCookies(cookies: Cookies) {
 }
 
 export const handle = (async ({ event, resolve }) => {
-	const { cookies, locals } = event
-	const user = await getUserFromCookies(cookies)
+	event.locals.user = await getUserFromEvent(event)
+	event.locals.abilities = defineAbilityFor(event.locals.user)
 
-	locals.user = user
-
-	return await resolve({
-		...event,
-		locals,
-		cookies
-	})
+	return await resolve(event)
 }) satisfies Handle

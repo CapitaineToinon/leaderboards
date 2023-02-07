@@ -1,5 +1,5 @@
 import type { Actions } from './$types'
-import { signin as schema } from '$lib/zfd/auth'
+import { create as schema } from '$lib/zfd/post'
 import { parseForm } from '$lib/form'
 import { createCaller } from '$lib/server/trpc'
 import { TRPCError } from '@trpc/server'
@@ -17,11 +17,11 @@ export const actions = {
 		const trpc = await createCaller({ locals })
 
 		try {
-			await trpc.auth.signin(form.result)
-			throw redirect(302, '/auth/login')
+			const post = await trpc.post.createMine(form.result)
+			throw redirect(307, `/posts/${post.id}`)
 		} catch (e) {
 			if (e instanceof TRPCError) {
-				if (e.code === 'CONFLICT') {
+				if (e.code === 'FORBIDDEN') {
 					return form.error(e)
 				}
 			}

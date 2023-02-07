@@ -1,12 +1,11 @@
 import type { inferAsyncReturnType } from '@trpc/server'
 import { prisma } from '$lib/server/prisma'
-import { defineAbilityFor } from '../casl'
 
-export const createContext = async () => {
-	const abilities = defineAbilityFor(null)
+export type CreateContextParams = { locals: App.Locals }
 
+export const createContext = async ({ locals }: CreateContextParams) => {
 	return {
-		abilities,
+		...locals,
 		db: prisma
 	}
 }

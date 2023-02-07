@@ -4,7 +4,7 @@
 	export let data: PageData
 </script>
 
-<h1>Welcome</h1>
+<a href="/posts/new">New post</a>
 
 {#each data.posts as post}
 	<a href={`/posts/${post.id}`}>
@@ -12,5 +12,5 @@
 		<p>{post.content}</p>
 	</a>
 {:else}
-	No posts yet
+	<div>You have no posts yet</div>
 {/each}

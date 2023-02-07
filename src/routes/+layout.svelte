@@ -13,6 +13,9 @@
 		</li>
 		{#if data.user}
 			<li>
+				<a href="/profile">{data.user.name}</a>
+			</li>
+			<li>
 				<form
 					action="/auth/logout"
 					method="post"

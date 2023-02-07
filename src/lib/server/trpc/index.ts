@@ -1,7 +1,7 @@
-import { createContext } from './context'
+import { type CreateContextParams, createContext } from './context'
 import { appRouter } from './routers'
 
-export async function createCaller() {
-	const context = await createContext()
+export async function createCaller(params: CreateContextParams) {
+	const context = await createContext(params)
 	return appRouter.createCaller(context)
 }

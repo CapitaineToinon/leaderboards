@@ -1,19 +1,20 @@
 import type { Actions, PageServerLoad } from './$types'
-import { login as schema } from '$lib/zfd/auth'
-import { parseForm } from '$lib/form'
+import { update as schema } from '$lib/zfd/post'
 import { createCaller } from '$lib/server/trpc'
+import { error, redirect } from '@sveltejs/kit'
 import { TRPCError } from '@trpc/server'
-import { redirect } from '@sveltejs/kit'
-import { sign } from '$lib/server/jose'
+import { parseForm } from '$lib/form'
 
-export const load = (async ({ locals }) => {
-	if (locals.user) {
-		throw redirect(307, '/')
+export const load = (async ({ parent }) => {
+	const { canUpdate } = await parent()
+
+	if (!canUpdate) {
+		throw error(403, 'FORBIDDEN')
 	}
 }) satisfies PageServerLoad
 
 export const actions = {
-	default: async ({ request, cookies, locals }) => {
+	default: async ({ request, locals }) => {
 		const formData = await request.formData()
 		const form = await parseForm({ schema, formData })
 
@@ -24,17 +25,7 @@ export const actions = {
 		const trpc = await createCaller({ locals })
 
 		try {
-			const user = await trpc.auth.login(form.result)
-			const token = await sign(user)
-
-			cookies.set('auth_token', token, {
-				path: '/',
-				httpOnly: true,
-				sameSite: 'strict',
-				secure: import.meta.env.PROD
-			})
-
-			throw redirect(307, '/')
+			await trpc.post.update(form.result)
 		} catch (e) {
 			if (e instanceof TRPCError) {
 				if (e.code === 'FORBIDDEN') {
@@ -44,5 +35,7 @@ export const actions = {
 
 			throw e
 		}
+
+		throw redirect(302, `/posts/${form.result.id}`)
 	}
 } satisfies Actions
