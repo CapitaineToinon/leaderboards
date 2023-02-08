@@ -26,6 +26,7 @@
 		name={names.email}
 		bind:value={$values.email}
 		required
+		data-testid={names.email}
 	/>
 	{#if $fieldErrors?.email}
 		<p>{$fieldErrors.email}</p>
@@ -33,6 +34,7 @@
 	<button
 		type="submit"
 		class="border py-2 disabled:opacity-50"
-		disabled={!$success && $submitted}>submit</button
+		disabled={!$success && $submitted}
+		data-testid="submit">submit</button
 	>
 </form>
