@@ -11,10 +11,14 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"format": "prettier --plugin-search-dir . --write .",
+		"story:dev": "histoire dev",
+		"story:build": "histoire build",
+		"story:preview": "histoire preview"
 	},
 	"devDependencies": {
 		"@faker-js/faker": "^7.6.0",
+		"@histoire/plugin-svelte": "^0.13.0",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
@@ -25,6 +29,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"histoire": "^0.13.0",
 		"postcss": "^8.4.21",
 		"prettier": "^2.8.3",
 		"prettier-plugin-svelte": "^2.8.1",
