@@ -30,8 +30,9 @@ jobs:
         run: npm run test:unit -- --run
 
       - name: setup playwright
-        run: npx playwright install --with-deps
-        run: npx playwright install-deps
+        run: |
+          npx playwright install --with-deps
+          npx playwright install-deps
 
       - name: setup prisma
         run: npx prisma db push
