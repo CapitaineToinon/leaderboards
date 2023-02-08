@@ -14,4 +14,6 @@ export const update = zfd.formData({
 	published: zfd.checkbox()
 })
 
-export const get = zfd.formData(zodGet)
+export const get = zfd.formData({
+	id: zodGet.shape.id
+})
