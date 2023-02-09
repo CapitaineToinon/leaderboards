@@ -1,6 +1,6 @@
 import type { User, Post } from '@prisma/client'
 import type { PrismaQuery, Subjects } from '@casl/prisma'
-import { PureAbility, AbilityBuilder } from '@casl/ability'
+import { type PureAbility, AbilityBuilder } from '@casl/ability'
 import { createPrismaAbility } from './prisma'
 
 type Actions = 'read' | 'create' | 'update' | 'delete'
