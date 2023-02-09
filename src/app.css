@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.btn {
+		padding: theme('spacing.3');
+		border-width: 1px;
+		border-color: theme('colors.black');
+	}
+
+	.btn-primary {
+		border-color: theme('colors.blue.500');
+	}
+
+	.btn-error {
+		border-color: theme('colors.red.500');
+	}
+}

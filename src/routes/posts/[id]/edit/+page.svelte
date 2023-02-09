@@ -35,6 +35,7 @@
 	{/if}
 
 	<textarea
+		class="w-full"
 		name={names.content}
 		value={data.post.content ?? ''}
 	/>
@@ -57,5 +58,10 @@
 		<p>{$fieldErrors.published}</p>
 	{/if}
 
-	<button type="submit">Save</button>
+	<div>
+		<button
+			type="submit"
+			class="btn">Save</button
+		>
+	</div>
 </form>

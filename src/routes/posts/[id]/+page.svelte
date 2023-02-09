@@ -4,12 +4,8 @@
 	export let data: PageData
 </script>
 
-<h1>{data.post.title}</h1>
-
-<textarea
-	value={data.post.content}
-	readonly
-/>
+<h1 class="text-2xl font-bold">{data.post.title}</h1>
+<p class="whitespace-pre-wrap">{data.post.content}</p>
 
 <p>
 	Post written by {#if data.mine}

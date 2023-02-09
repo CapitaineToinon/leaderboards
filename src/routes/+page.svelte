@@ -4,13 +4,14 @@
 	export let data: PageData
 </script>
 
-<h1>Welcome</h1>
-
-{#each data.posts as post}
-	<a href={`/posts/${post.id}`}>
-		<h2>{post.title}</h2>
-		<p>{post.content}</p>
-	</a>
-{:else}
-	No posts yet
-{/each}
+<div class="flex flex-col gap-3">
+	{#each data.posts as post}
+		<a href={`/posts/${post.id}`}>
+			<h2 class="font-bold">{post.title}</h2>
+			<p class="overflow-hidden text-ellipsis whitespace-nowrap">{post.content}</p>
+			<p>by {post.author.name}</p>
+		</a>
+	{:else}
+		No posts yet
+	{/each}
+</div>

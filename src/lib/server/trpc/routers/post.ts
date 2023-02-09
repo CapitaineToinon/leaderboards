@@ -85,6 +85,9 @@ export const postRouter = router({
 			where: {
 				published: true
 			},
+			include: {
+				author: true
+			},
 			take: 10
 		})
 	}),

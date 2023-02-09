@@ -5,14 +5,20 @@
 </script>
 
 <div>
-	{#if data.canUpdate}
-		<a href={`/posts/${data.post.id}/edit`}>Update</a>
-	{/if}
-	{#if data.canDelete}
-		<a href={`/posts/${data.post.id}/delete`}>Delete</a>
-	{/if}
+	<slot />
 </div>
 
-<div>
-	<slot />
+<div class="mt-3 flex gap-1 empty:hidden">
+	{#if data.canUpdate}
+		<a
+			href={`/posts/${data.post.id}/edit`}
+			class="btn btn-primary">Update</a
+		>
+	{/if}
+	{#if data.canDelete}
+		<a
+			href={`/posts/${data.post.id}/delete`}
+			class="btn btn-error">Delete</a
+		>
+	{/if}
 </div>
