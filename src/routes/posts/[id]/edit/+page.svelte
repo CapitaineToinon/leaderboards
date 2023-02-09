@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { useForm } from '$lib/form'
 	import { update as schema } from '$lib/zfd/post'
-	import type { PageData } from './$types'
+	import type { ActionData, PageData } from './$types'
 
 	export let data: PageData
+	export let form: ActionData
 
 	const { names, fieldErrors, enhance } = useForm({
-		schema
+		schema,
+		form
 	})
 </script>
 
@@ -15,6 +17,10 @@
 	method="post"
 	use:enhance
 >
+	{#if form?.error}
+		<div class="border border-red-500 p-3 text-center font-bold">{form.error}</div>
+	{/if}
+
 	<input
 		type="hidden"
 		name={names.id}
@@ -22,11 +28,13 @@
 	/>
 
 	{#if $fieldErrors?.id}
-		<p>{$fieldErrors.id}</p>
+		<p class="text-red-500">{$fieldErrors.id}</p>
 	{/if}
 
+	<label for={names.title}>Title</label>
 	<input
 		type="text"
+		id={names.title}
 		name={names.title}
 		value={data.post.title ?? ''}
 	/>
@@ -34,8 +42,10 @@
 		<p>{$fieldErrors.title}</p>
 	{/if}
 
+	<label for={names.content}>Content</label>
 	<textarea
 		class="w-full"
+		id={names.content}
 		name={names.content}
 		value={data.post.content ?? ''}
 	/>

@@ -6,19 +6,25 @@
 	export let form: ActionData
 </script>
 
-{#if form?.error}
-	<h1>{form?.error}</h1>
-{/if}
-
 <form
 	method="post"
+	class="flex flex-col gap-3"
 	use:enhance
 >
-	<div>Are you sure you want to delete this post?</div>
+	{#if form?.error}
+		<div class="border border-red-500 p-3 text-center font-bold">{form.error}</div>
+	{/if}
+
+	<div class="border border-yellow-500 p-3 text-center font-bold">
+		Are you sure you want to delete this post?
+	</div>
 	<input
 		type="hidden"
 		name="id"
 		value={data.post.id}
 	/>
-	<button type="submit">Delete</button>
+	<button
+		type="submit"
+		class="btn btn-error">Delete</button
+	>
 </form>

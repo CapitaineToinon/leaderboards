@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { useForm } from '$lib/form'
 	import { create as schema } from '$lib/zfd/post'
+	import type { ActionData } from './$types'
 
-	const { names, fieldErrors, enhance } = useForm({
-		schema
+	export let form: ActionData
+
+	const { names, fieldErrors, values, enhance } = useForm({
+		schema,
+		form
 	})
 </script>
 
@@ -12,18 +16,30 @@
 	method="post"
 	use:enhance
 >
-	<input
-		type="text"
-		name={names.title}
-	/>
-	{#if $fieldErrors?.title}
-		<p>{$fieldErrors.title}</p>
+	{#if form?.error}
+		<div class="border border-red-500 p-3 text-center font-bold">{form.error}</div>
 	{/if}
 
-	<textarea name={names.content} />
+	<label for={names.title}>Title</label>
+	<input
+		type="text"
+		id={names.title}
+		name={names.title}
+		bind:value={$values.title}
+	/>
+	{#if $fieldErrors?.title}
+		<p class="text-red-500">{$fieldErrors.title}</p>
+	{/if}
+
+	<label for={names.content}>Content</label>
+	<textarea
+		id={names.content}
+		name={names.content}
+		bind:value={$values.content}
+	/>
 
 	{#if $fieldErrors?.content}
-		<p>{$fieldErrors.content}</p>
+		<p class="text-red-500">{$fieldErrors.content}</p>
 	{/if}
 
 	<div>
@@ -36,8 +52,13 @@
 	</div>
 
 	{#if $fieldErrors?.published}
-		<p>{$fieldErrors.published}</p>
+		<p class="text-red-500">{$fieldErrors.published}</p>
 	{/if}
 
-	<button type="submit">Save</button>
+	<div>
+		<button
+			type="submit"
+			class="btn">Save</button
+		>
+	</div>
 </form>
