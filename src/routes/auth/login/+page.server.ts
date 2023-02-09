@@ -6,6 +6,7 @@ import { TRPCError } from '@trpc/server'
 import { redirect } from '@sveltejs/kit'
 import { sign } from '$lib/server/jose'
 import * as authCookie from '$lib/server/cookies/auth'
+import * as flash from '$lib/server/cookies/flash'
 
 export const load = (async ({ locals }) => {
 	if (locals.user) {
@@ -31,6 +32,11 @@ export const actions = {
 			authCookie.setCookie({
 				cookies,
 				token
+			})
+
+			flash.setCookie({
+				message: `Welcome back, ${user.name}!`,
+				cookies
 			})
 
 			throw redirect(302, '/')
