@@ -10,7 +10,7 @@ import * as flash from '$lib/server/cookies/flash'
 
 export const load = (async ({ locals }) => {
 	if (locals.user) {
-		throw redirect(307, '/')
+		throw redirect(302, '/')
 	}
 }) satisfies PageServerLoad
 

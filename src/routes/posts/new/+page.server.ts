@@ -18,7 +18,7 @@ export const actions = {
 
 		try {
 			const post = await trpc.post.createMine(form.result)
-			throw redirect(307, `/posts/${post.id}`)
+			throw redirect(303, `/posts/${post.id}`)
 		} catch (e) {
 			if (e instanceof TRPCError) {
 				if (e.code === 'FORBIDDEN') {
