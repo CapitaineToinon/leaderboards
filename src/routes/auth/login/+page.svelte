@@ -2,6 +2,7 @@
 	import type { ActionData } from './$types'
 	import { login as schema } from '$lib/zfd/auth'
 	import { useForm } from '$lib/form'
+	import Alert from '$ui/Alert.svelte'
 
 	export let form: ActionData
 
@@ -17,7 +18,7 @@
 	class="flex flex-col gap-3"
 >
 	{#if form?.error}
-		<div class="border border-red-500 p-3 text-center font-bold">{form.error}</div>
+		<Alert type="error">{form.error}</Alert>
 	{/if}
 
 	<h1 class="text-lg font-bold">Login</h1>

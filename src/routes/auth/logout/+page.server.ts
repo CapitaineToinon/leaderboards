@@ -1,7 +1,7 @@
 import type { Actions, PageServerLoad } from './$types'
 import { redirect } from '@sveltejs/kit'
 import * as authCookie from '$lib/server/cookies/auth'
-import * as flash from '$lib/server/cookies/flash'
+import * as alert from '$lib/server/cookies/alert'
 
 export const load = (async ({ locals }) => {
 	return {
@@ -15,8 +15,9 @@ export const actions = {
 			cookies
 		})
 
-		flash.setCookie({
-			message: 'You have been logged out.',
+		alert.add({
+			text: 'You have been logged out.',
+			dismissible: true,
 			cookies
 		})
 

@@ -1,13 +1,13 @@
 import type { LayoutServerLoad } from './$types'
-import * as flash from '$lib/server/cookies/flash'
+import * as alert from '$lib/server/cookies/alert'
 
 export const load = (async ({ locals, cookies }) => {
-	const flashMessage = flash.getCookie({
+	const alerts = alert.get({
 		cookies
 	})
 
 	return {
-		flashMessage,
+		alerts,
 		user: locals.user
 	}
 }) satisfies LayoutServerLoad
