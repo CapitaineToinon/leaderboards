@@ -1,40 +1,30 @@
 <script lang="ts">
-	import { enhance } from '$app/forms'
-	import type { LayoutData } from './$types'
+	import type { Alerts } from '$lib/server/cookies/alert'
+	import Navbar from '$ui/Navbar.svelte'
+	import Alert from '$ui/Alert.svelte'
 	import '../app.css'
 
-	export let data: LayoutData
+	export let data
+
+	let alerts: Alerts = []
+
+	$: if (data.alerts) {
+		alerts = data.alerts
+	}
 </script>
 
-<nav class="mb-3 border-b py-3">
-	<ul class="mx-auto flex max-w-md gap-3">
-		<li>
-			<a href="/">Home</a>
-		</li>
-		{#if data.user}
-			<li>
-				<a href="/profile">{data.user.name}</a>
-			</li>
-			<li>
-				<form
-					action="/auth/logout"
-					method="post"
-					use:enhance
-				>
-					<button type="submit">Logout</button>
-				</form>
-			</li>
-		{:else}
-			<li>
-				<a href="/auth/login">Login</a>
-			</li>
-			<li>
-				<a href="/auth/signin">Sign in</a>
-			</li>
-		{/if}
-	</ul>
-</nav>
+<Navbar user={data.user} />
 
 <main class="mx-auto max-w-md">
+	{#if alerts.length}
+		<div class="mb-3">
+			{#each alerts as alert (alert.id)}
+				<Alert dismissible={alert.dismissible}>
+					{alert.text}
+				</Alert>
+			{/each}
+		</div>
+	{/if}
+
 	<slot />
 </main>

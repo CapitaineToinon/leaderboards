@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 export const create = z.object({
-	title: z.string(),
-	content: z.string(),
+	title: z.string().min(1).max(50),
+	content: z.string().min(1),
 	published: z.boolean()
 })
 

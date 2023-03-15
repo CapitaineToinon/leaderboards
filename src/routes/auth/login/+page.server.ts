@@ -1,4 +1,3 @@
-import type { Actions, PageServerLoad } from './$types'
 import { login as schema } from '$lib/zfd/auth'
 import { parseForm } from '$lib/form'
 import { createCaller } from '$lib/server/trpc'
@@ -6,12 +5,13 @@ import { TRPCError } from '@trpc/server'
 import { redirect } from '@sveltejs/kit'
 import { sign } from '$lib/server/jose'
 import * as authCookie from '$lib/server/cookies/auth'
+import * as alert from '$lib/server/cookies/alert'
 
-export const load = (async ({ locals }) => {
+export const load = async ({ locals }) => {
 	if (locals.user) {
-		throw redirect(307, '/')
+		throw redirect(302, '/')
 	}
-}) satisfies PageServerLoad
+}
 
 export const actions = {
 	default: async ({ request, cookies, locals }) => {
@@ -33,6 +33,12 @@ export const actions = {
 				token
 			})
 
+			alert.add({
+				text: 'You have been logged in.',
+				dismissible: true,
+				cookies
+			})
+
 			throw redirect(302, '/')
 		} catch (e) {
 			if (e instanceof TRPCError) {
@@ -44,4 +50,4 @@ export const actions = {
 			throw e
 		}
 	}
-} satisfies Actions
+}

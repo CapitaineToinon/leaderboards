@@ -1,4 +1,3 @@
-import type { LayoutServerLoad } from './$types'
 import { get as paramsSchema } from '$lib/zod/post'
 import { createCaller } from '$lib/server/trpc'
 import { error } from '@sveltejs/kit'
@@ -6,7 +5,7 @@ import { subject } from '@casl/ability'
 import { TRPCError } from '@trpc/server'
 import { getHTTPStatusCodeFromError } from '@trpc/server/http'
 
-export const load = (async ({ params, locals }) => {
+export const load = async ({ params, locals }) => {
 	const result = paramsSchema.safeParse(params)
 
 	if (!result.success) {
@@ -34,4 +33,4 @@ export const load = (async ({ params, locals }) => {
 
 		throw e
 	}
-}) satisfies LayoutServerLoad
+}

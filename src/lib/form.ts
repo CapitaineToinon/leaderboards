@@ -60,25 +60,31 @@ export async function parseForm<T extends z.AnyZodObject>({
 	const result = await schema.safeParseAsync(formData)
 
 	const names = schema.innerType().keyof().Values as ReturnType<T['keyof']>['Values']
-	const values = Object.keys(names).reduce((acc, name) => {
+
+	const emptyFormDataValues = Object.keys(names).reduce((acc, name) => {
 		return {
 			...acc,
-			[name]: !result.success ? formData.get(name)?.toString() ?? '' : ''
+			[name]: ''
+		}
+	}, {} as { [k in keyof z.infer<T>]: string })
+
+	const formDataValues = Object.keys(names).reduce((acc, name) => {
+		return {
+			...acc,
+			[name]: formData.get(name)?.toString() ?? ''
 		}
 	}, {} as { [k in keyof z.infer<T>]: string })
 
 	if (result.success) {
-		const state = {
-			success: true,
-			values,
-			fieldErrors: {},
-			formErrors: []
-		}
-
 		return {
 			success: true,
 			result: result.data,
-			state,
+			state: {
+				success: true,
+				values: emptyFormDataValues,
+				fieldErrors: {},
+				formErrors: []
+			},
 			json(data) {
 				return {
 					data,
@@ -88,7 +94,12 @@ export async function parseForm<T extends z.AnyZodObject>({
 			error(e) {
 				return kitFail(getHTTPStatusCodeFromError(e), {
 					error: e.code,
-					state
+					state: {
+						success: false,
+						values: formDataValues,
+						fieldErrors: {},
+						formErrors: []
+					}
 				})
 			}
 		}
@@ -97,8 +108,8 @@ export async function parseForm<T extends z.AnyZodObject>({
 	const { fieldErrors, formErrors } = result.error.flatten()
 
 	const state = {
-		success: result.success,
-		values,
+		success: false,
+		values: formDataValues,
 		fieldErrors,
 		formErrors
 	}
