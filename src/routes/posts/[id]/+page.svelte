@@ -1,7 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types'
-
-	export let data: PageData
+	export let data
 
 	$: href = data.mine ? '/profile' : `/users/${data.post.authorId}`
 	$: name = data.mine ? 'yourself' : data.post.author.name

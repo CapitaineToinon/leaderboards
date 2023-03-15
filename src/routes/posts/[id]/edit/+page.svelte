@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { useForm } from '$lib/form'
 	import { update as schema } from '$lib/zfd/post'
-	import type { ActionData, PageData } from './$types'
 
-	export let data: PageData
-	export let form: ActionData
+	export let data
+	export let form
 
 	const { names, fieldErrors, enhance } = useForm({
 		schema,
