@@ -46,7 +46,7 @@
 		"@prisma/client": "^4.9.0",
 		"@trpc/server": "^10.9.1",
 		"jose": "^4.11.4",
-		"zod": "^3.20.5",
+		"zod": "^3.21.4",
 		"zod-form-data": "^2.0.0"
 	}
 }
