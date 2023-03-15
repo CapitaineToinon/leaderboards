@@ -6,11 +6,11 @@ import { TRPCError } from '@trpc/server'
 import { redirect } from '@sveltejs/kit'
 import { sign } from '$lib/server/jose'
 import * as authCookie from '$lib/server/cookies/auth'
-import * as flash from '$lib/server/cookies/flash'
+import * as alert from '$lib/server/cookies/alert'
 
 export const load = (async ({ locals }) => {
 	if (locals.user) {
-		throw redirect(307, '/')
+		throw redirect(302, '/')
 	}
 }) satisfies PageServerLoad
 
@@ -34,8 +34,9 @@ export const actions = {
 				token
 			})
 
-			flash.setCookie({
-				message: `Welcome back, ${user.name}!`,
+			alert.add({
+				text: 'You have been logged in.',
+				dismissible: true,
 				cookies
 			})
 
