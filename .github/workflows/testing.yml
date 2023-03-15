@@ -17,28 +17,46 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: install dependencies
-        run: npm ci
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: svelte-check
-        run: npm run check
+        run: pnpm run check
 
       - name: pretter & eslint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: vitest
-        run: npm run test:unit -- --run
+        run: pnpm run test:unit -- --run
 
       - name: setup playwright
         run: |
-          npx playwright install --with-deps
-          npx playwright install-deps
+          pnpx playwright install --with-deps
+          pnpx playwright install-deps
 
       - name: setup prisma
-        run: npx prisma db push
+        run: pnpx prisma db push
 
       - name: playwright
-        run: npx playwright test
+        run: pnpx playwright test
 
       - uses: actions/upload-artifact@v3
         if: always()
