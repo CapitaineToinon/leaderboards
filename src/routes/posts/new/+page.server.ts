@@ -1,4 +1,3 @@
-import type { Actions } from './$types'
 import { create as schema } from '$lib/zfd/post'
 import { parseForm } from '$lib/form'
 import { createCaller } from '$lib/server/trpc'
@@ -29,4 +28,4 @@ export const actions = {
 			throw e
 		}
 	}
-} satisfies Actions
+}

@@ -1,7 +1,6 @@
-import type { LayoutServerLoad } from './$types'
 import * as alert from '$lib/server/cookies/alert'
 
-export const load = (async ({ locals, cookies }) => {
+export const load = async ({ locals, cookies }) => {
 	const alerts = alert.get({
 		cookies
 	})
@@ -10,4 +9,4 @@ export const load = (async ({ locals, cookies }) => {
 		alerts,
 		user: locals.user
 	}
-}) satisfies LayoutServerLoad
+}

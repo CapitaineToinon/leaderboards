@@ -1,17 +1,16 @@
-import type { Actions, PageServerLoad } from './$types'
 import { get as schema } from '$lib/zfd/post'
 import { createCaller } from '$lib/server/trpc'
 import { error, redirect } from '@sveltejs/kit'
 import { TRPCError } from '@trpc/server'
 import { parseForm } from '$lib/form'
 
-export const load = (async ({ parent }) => {
+export const load = async ({ parent }) => {
 	const { canDelete } = await parent()
 
 	if (!canDelete) {
 		throw error(403, 'FORBIDDEN')
 	}
-}) satisfies PageServerLoad
+}
 
 export const actions = {
 	default: async ({ request, locals }) => {
@@ -38,4 +37,4 @@ export const actions = {
 
 		throw redirect(302, '/profile')
 	}
-} satisfies Actions
+}

@@ -1,4 +1,3 @@
-import type { Actions, PageServerLoad } from './$types'
 import { login as schema } from '$lib/zfd/auth'
 import { parseForm } from '$lib/form'
 import { createCaller } from '$lib/server/trpc'
@@ -8,11 +7,11 @@ import { sign } from '$lib/server/jose'
 import * as authCookie from '$lib/server/cookies/auth'
 import * as alert from '$lib/server/cookies/alert'
 
-export const load = (async ({ locals }) => {
+export const load = async ({ locals }) => {
 	if (locals.user) {
 		throw redirect(302, '/')
 	}
-}) satisfies PageServerLoad
+}
 
 export const actions = {
 	default: async ({ request, cookies, locals }) => {
@@ -51,4 +50,4 @@ export const actions = {
 			throw e
 		}
 	}
-} satisfies Actions
+}

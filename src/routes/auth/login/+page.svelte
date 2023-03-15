@@ -1,10 +1,9 @@
 <script lang="ts">
-	import type { ActionData } from './$types'
 	import { login as schema } from '$lib/zfd/auth'
 	import { useForm } from '$lib/form'
 	import Alert from '$ui/Alert.svelte'
 
-	export let form: ActionData
+	export let form
 
 	const { names, fieldErrors, values, submitted, success, enhance } = useForm({
 		schema,
