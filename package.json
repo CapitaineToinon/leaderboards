@@ -47,6 +47,6 @@
 		"@trpc/server": "^10.9.1",
 		"jose": "^4.11.4",
 		"zod": "^3.21.4",
-		"zod-form-data": "^1.2.4"
+		"zod-form-data": "^2.0.0"
 	}
 }

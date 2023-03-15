@@ -1,4 +1,5 @@
 import type { z } from 'zod'
+import type { zfd } from 'zod-form-data'
 import { fail as kitFail } from '@sveltejs/kit'
 import { enhance as _enhance } from '$app/forms'
 import { derived, writable, get } from 'svelte/store'
@@ -40,11 +41,20 @@ type ParseResult<T extends z.AnyZodObject> = {
 	  }
 )
 
+// jank workaround for https://github.com/airjp73/remix-validated-form/discussions/247
+type FormDataLikeInput = ReturnType<typeof zfd.formData> extends z.ZodEffects<
+	z.ZodTypeAny,
+	z.output<z.ZodTypeAny>,
+	infer T
+>
+	? T
+	: never
+
 export async function parseForm<T extends z.AnyZodObject>({
 	schema,
 	formData
 }: {
-	schema: z.ZodEffects<T>
+	schema: z.ZodEffects<T, z.output<T>, FormDataLikeInput>
 	formData: FormData
 }): Promise<ParseResult<T>> {
 	const result = await schema.safeParseAsync(formData)
@@ -126,7 +136,7 @@ export function useForm<
 	form,
 	onSubmitted
 }: {
-	schema: z.ZodEffects<T>
+	schema: z.ZodEffects<T, z.output<T>, FormDataLikeInput>
 	form?: F | null
 	onSubmitted?: (form: F) => void
 }) {
