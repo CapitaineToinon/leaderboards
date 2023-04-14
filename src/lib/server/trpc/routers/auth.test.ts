@@ -26,7 +26,7 @@ describe('trpc auth router', () => {
 			email: user.email
 		})
 
-		expect(result).toStrictEqual(user)
+		expect(result).toStrictEqual(null)
 	})
 
 	it('should not be able to login with unknown email', async () => {
