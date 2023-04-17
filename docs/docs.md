@@ -156,4 +156,14 @@ Easy migration from Remix, very similar mental model
 
 ## Continuis integration with Github Actions
 
+Github Actions are Github's own CI/CD solution. They allow you to run tests, deploy applications and do a lot of other things. In this project, I've used Github Actions to run the tests on every push and pull request. This ensures that the code is always working as expected.
+
+Now, whenever someone pushes a commit to the repository, the tests are automatically run. If the tests fail, the commit is rejected and the developer is notified.
+
+![image](img/ci:fail.png)
+
+And the details can be seen in the Github Actions tab. That way, the developer can see exactly what went wrong and fix it. We can also protect the main branch to prevent any faulty code from being merged.
+
+![image](img/ci:fail:2.png)
+
 # Conclusion
