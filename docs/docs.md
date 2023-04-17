@@ -144,8 +144,6 @@ Explain why Sveltekit meets the needs
 
 Easy migration from Remix, very similar mental model
 
-
-
 # Testing
 
 // add images and schema
