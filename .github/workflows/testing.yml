@@ -49,14 +49,14 @@ jobs:
 
       - name: setup playwright
         run: |
-          pnpx playwright install --with-deps
-          pnpx playwright install-deps
+          pnpm playwright install --with-deps
+          pnpm playwright install-deps
 
       - name: setup prisma
-        run: pnpx prisma db push
+        run: pnpm prisma db push
 
       - name: playwright
-        run: pnpx playwright test
+        run: pnpm playwright test
 
       - uses: actions/upload-artifact@v3
         if: always()
